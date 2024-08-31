@@ -8,7 +8,11 @@ document.warden.style.picture = picture[warden]
 
 
 /*button handling */
-
+const blacksheet = document.getElementById("blacksheet")
+function disappear() {
+    document.blacksheet.style.display= "none"
+}
+document.addEventListener("click", disappear)
 
 //code
 
