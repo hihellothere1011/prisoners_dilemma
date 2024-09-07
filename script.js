@@ -15,4 +15,12 @@ blacksheet.addEventListener("click", blacksheet.style.display = "none")
 
 //code
 
+/*state management*/
+class sibling {
+    constructor(name, money) {
+        this.name = name
+        this.money = money
+    }
+}
+
 

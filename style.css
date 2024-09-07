@@ -1,42 +1,48 @@
 body {
     background-color: rgb(143, 195, 255);
+    max-height: 100%;
 }
 
 .char {
     position: absolute;
-    color: #000;
-    border: 1px solid #000000;
-    overflow: hidden;
-    object-fit: cover;
+    /*border: 1px solid #000000;*/
 }
 
 #warden {
     left: 37.5%;
-    height: 40%;
-    width: 20%;
+    top: 10%;
+    height: 60%;
+    width: 30%;
 }
 
 #table {
     width: 40%;
     height: 30%;
-    left: 27.5%;
+    left: 30%;
     top: 37.5%;
 }
 
 #player {
-    width: 10%;
+    width: 20%;
     height: 40%;
     left: 15%;
     bottom: 37.5%;
+    transform: scaleX(-1);
+}
+#playerM {
+    position: absolute;
+    left: 15%;
+    bottom: 35%;
+    font-size: 50px;
 }
 
-#npc {
-    width: 10%;
+#npc{
+    width: 20%;
     height: 40%;
-    right: 20%;
+    right: 15%;
     bottom: 37.5%;
-
 }
+
 
 button {
     position: absolute;
