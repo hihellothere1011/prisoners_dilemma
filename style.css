@@ -3,16 +3,17 @@ body {
     max-height: 100%;
 }
 
+
 .char {
     position: absolute;
     /*border: 1px solid #000000;*/
 }
 
 #warden {
-    left: 37.5%;
+    left: 25%;
     top: 10%;
     height: 60%;
-    width: 30%;
+    width: 50%;
 }
 
 #table {
@@ -22,27 +23,57 @@ body {
     top: 37.5%;
 }
 
-#player {
+#playername {
+    position: absolute;
+    border: 1px solid #000;
     width: 20%;
-    height: 40%;
+    height: 5%;
     left: 15%;
+    top: 17.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#player1 {
+    width: 30%;
+    height: 40%;
+    left: 10%;
     bottom: 37.5%;
     transform: scaleX(-1);
 }
-#playerM {
+#player1M {
     position: absolute;
     left: 15%;
-    bottom: 35%;
+    bottom: 25%;
     font-size: 50px;
 }
 
-#npc{
+#player2name {
+    position: absolute;
+    border: 1px solid #000;
     width: 20%;
-    height: 40%;
+    height: 5%;
     right: 15%;
+    top: 17.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#player2{
+    width: 30%;
+    height: 40%;
+    right: 10%;
     bottom: 37.5%;
 }
 
+#player2M {
+    position: absolute;
+    right: 15%;
+    bottom: 25%;
+    font-size: 50px;
+}
 
 button {
     position: absolute;
@@ -92,7 +123,7 @@ button {
     z-index: 1;
     width: 100%;
     height: 100%;
-    opacity: 50%;
+    opacity: 0%;
 }
 
 #click {
