@@ -35,12 +35,12 @@ class sibling {
 }
 
 let playernamesubmit = ""
-
+let playername = document.getElementById("playername")
 document.getElementById("playerform").addEventListener("submit", () => {
-    console.log("hello")
     event.preventDefault()
     playernamesubmit = document.getElementById("write-in").value
+    playername.style.textContent = playernamesubmit
+    console.log(playername.style.textContent)
 })
 
-const playername = document.getElementById("playername")
-playername.style.textContent = playernamesubmit
+
