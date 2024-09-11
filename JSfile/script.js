@@ -1,5 +1,6 @@
 import * as pic from "./picture.js"
-import * as bton from "./button.js"
+import betray from "./button.js"
+import cooperate from "./button.js"
 import {player}from "./player.js"
 
 const player1name = document.getElementById("playername")
@@ -7,11 +8,11 @@ const player2name = document.getElementById("player2name")
 
 let playernamesubmit = ""
 let playername = document.getElementById("playername")
-document.getElementById("playerform").addEventListener("submit", () => {
+document.getElementById("play").addEventListener("submit", () => {
     event.preventDefault()
     playernamesubmit = document.getElementById("write-in").value
     playernamesubmit.textContent = playernamesubmit
-    console.log(playername.style.textContent)
+    console.log(playername.textContent)
 })
 
 function playerCreation() {
@@ -28,3 +29,5 @@ function playerCreation() {
 const play = document.getElementById("play")
 
 play.addEventListener("click", playerCreation)
+betray
+cooperate
