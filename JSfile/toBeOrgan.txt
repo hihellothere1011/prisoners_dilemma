@@ -1,0 +1,11 @@
+const player1name = document.getElementById("playername")
+const player2name = document.getElementById("player2name")
+
+let playernamesubmit = ""
+let playername = document.getElementById("playername")
+document.getElementById("play").addEventListener("submit", () => {
+    event.preventDefault()
+    playernamesubmit = document.getElementById("write-in").value
+    playernamesubmit.textContent = playernamesubmit
+    console.log(playername.textContent)
+})
