@@ -18,7 +18,9 @@ function playerCreation(name, coins) {
 
 
 
-
+function nameSetting() {
+    let p1nameSub
+}
 
 
 function generateDecision() {
