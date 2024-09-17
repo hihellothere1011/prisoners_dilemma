@@ -5,12 +5,8 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <form>
-            <label for="write-in">Player name:</label>
-            <input type="text" id="write-in" name="write-in">
-            <input type="submit" value="Let's go!" id="play">
-        </form>
-
+        <input type="text" id="textBox" placeholder="Player Name:">
+        <button onclick="nameSetting()" id="play">play</button>
 
 
         <img src="https://github.com/hihellothere1011/prisoners_dilemma/blob/main/images/%E5%B0%88%E6%A1%88.png?raw=true" alt="warden" class="char" id="warden">
@@ -23,7 +19,7 @@
         
         <span id="player2name"></span>
         <img src="https://github.com/hihellothere1011/prisoners_dilemma/blob/main/images/%E5%B0%88%E6%A1%88.png?raw=true" alt="player2" class="char" id="player2">
-        <span class="M" id="player2M">Allowance: <span id="p2">0</span> coins</span>
+        <span class="M" id="player2M">Allowance: <span id="p2">10</span> coins</span>
         
         <button id="betray">Betray</button>
         <button id="cooperate">Cooperate</button>
