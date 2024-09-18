@@ -5,27 +5,30 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <input type="text" id="textBox" placeholder="Player Name:">
-        <button onclick="nameSetting()" id="play">play</button>
+        <form>
+            <input type="text" id="p1name" placeholder="Enter The Name:">
+            <input type="submit" id="play">
+        </form>
 
-
-        <img src="https://github.com/hihellothere1011/prisoners_dilemma/blob/main/images/%E5%B0%88%E6%A1%88.png?raw=true" alt="warden" class="char" id="warden">
-        
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNKb7iaXwIW8vvkxXuiaOXMGZlKdh16VteZw&s" alt="table" class="char" id="table">
-        
-        <span id="playername"></span>
-        <img src="https://github.com/hihellothere1011/prisoners_dilemma/blob/main/images/%E5%B0%88%E6%A1%88.png?raw=true" alt="player1" class="char" id="player1">
-        <span class="M" id="player1M">Allowance: <span id="p1">0</span> coins</span>
-        
-        <span id="player2name"></span>
-        <img src="https://github.com/hihellothere1011/prisoners_dilemma/blob/main/images/%E5%B0%88%E6%A1%88.png?raw=true" alt="player2" class="char" id="player2">
-        <span class="M" id="player2M">Allowance: <span id="p2">10</span> coins</span>
-        
-        <button id="betray">Betray</button>
-        <button id="cooperate">Cooperate</button>
-        <div id="blacksheet">
-            <div class="background" id="click">Choose one and click</div>
-            <div class="background" id="intro"></div>
+        <div id="mainPart">
+            <img src="https://github.com/hihellothere1011/prisoners_dilemma/blob/main/images/%E5%B0%88%E6%A1%88.png?raw=true" alt="warden" class="char" id="warden">
+            
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNKb7iaXwIW8vvkxXuiaOXMGZlKdh16VteZw&s" alt="table" class="char" id="table">
+            
+            <span id="playername"></span>
+            <img src="https://github.com/hihellothere1011/prisoners_dilemma/blob/main/images/%E5%B0%88%E6%A1%88.png?raw=true" alt="player1" class="char" id="player1">
+            <span class="M" id="player1M">Allowance: <span id="p1">0</span> coins</span>
+            
+            <span id="player2name"></span>
+            <img src="https://github.com/hihellothere1011/prisoners_dilemma/blob/main/images/%E5%B0%88%E6%A1%88.png?raw=true" alt="player2" class="char" id="player2">
+            <span class="M" id="player2M">Allowance: <span id="p2">0</span> coins</span>
+            
+            <button id="betray">Betray</button>
+            <button id="cooperate">Cooperate</button>
+            <div id="blacksheet">
+                <div class="background" id="click">Choose one and click</div>
+                <div class="background" id="intro"></div>
+            </div>
         </div>
     <script type="module" src="JSfile/script.js"></script>
     </body>
