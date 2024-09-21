@@ -2,9 +2,10 @@
 
 
 export default class player {
-    constructor(name, money, decision) {
+    constructor(name, money, personality, history=[]) {
         this.name = name
         this.money = money
-        this.decision = decision
+        this.history = history
+        this.personality = personality
     }
 }

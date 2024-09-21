@@ -59,3 +59,29 @@ Problems now :
 1. Can't give the name to the players correctly
 
 2. Locations and sizes will be crazy on the moblie devices
+
+2024/9/16
+
+Nah
+
+2024/9/17
+
+Dealing with:
+
+1. Name setting at the beginning
+
+2. Functions moving to the main js file
+
+Solutions:
+
+1. Name setting
+
+(1) Trying to get the value from the text box
+
+(2) Asking help from ChatGPT
+
+(3) I'm confused by its dumb answer (Delete form and add a import and button instead)
+
+(4) My page just blow up (Not compeleted)
+
+2. 

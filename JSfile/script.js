@@ -1,5 +1,6 @@
 import * as pic from "./picture.js"
 import player from "./player.js"
+import generateDecision from "./personalities.js"
 
 
 
@@ -8,17 +9,27 @@ cooperate()
 
 
 let player1 = playerCreation("Austin", 0)
-let player2 = playerCreation("Bob", 0)
+let player2 = playerCreation("Bob", 0, 1)
+let games = 0
+let roundsLeft = numOfRound(10,20)
 
+console.log(player2)
 
-function playerCreation(name, coins) {
-    const plays = new player(name, coins)
+function playerCreation(name, money, personality=0) {
+    const plays = new player(name, money, personality)
     return plays
+}
+
+function numOfRound(min=10, max=15) {
+    if (min>max) [min, max] = [max, min]
+    return Math.floor(Math.random() *(max-min)) + min
 }
 
 function startTheGame() {
     document.getElementById("mainPart").style.display = "block"
-    
+    games += 1
+    document.getElementById("games").textContent = `GAME: ${games}`
+
 }
 
 
@@ -37,18 +48,14 @@ function nameSetting() {
 
 nameSetting()
 
-function generateDecision() {
-    return Math.random() < 0.5 ? "betray" : "cooperate";
-}
+
 
 
 
 /*point system */
-function pointSystem(p1Decision, p2Decision = generateDecision()) {
+function pointSystem(p1Decision, p2Decision = generateDecision(player2)) {
     let p1M = document.getElementById("p1")
     let p2M = document.getElementById("p2")
-    console.log(p1Decision)
-    console.log(`${p2Decision}-random`)
     switch (`${p1Decision}-${p2Decision}`) {
         case "betray-betray":
             player1.money += 1
@@ -76,7 +83,10 @@ function pointSystem(p1Decision, p2Decision = generateDecision()) {
             break;
         default:
             console.log("Invalid decisions");
+        
     }
+    player2.history.push([p1Decision,p2Decision])
+    console.log(player2.history)
 }
 
 /* blacksheet handling */
@@ -88,17 +98,28 @@ blacksheet.addEventListener("click", () => {
 
 
 /* betray & cooperate handling */
+function buttonPress(p1,p2) {
+    roundsLeft -= 1
+    console.log(roundsLeft)
+    if (roundsLeft <= 0) {
+        console.log("Game ends")
+        document.getElementById("mainPart").style.display = "none"
+    }
+}
+
+
 function betray() {
-    let p1Decision = 0
     const betray = document.getElementById("betray")
     betray.addEventListener("click", function() {
         pointSystem("betray")
+        buttonPress()
     })
 }
 function cooperate() {
     const coop = document.getElementById("cooperate")
     coop.addEventListener("click", () => {
         pointSystem("cooperate")
+        buttonPress()
     })
 
 }
