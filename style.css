@@ -7,6 +7,16 @@ body {
     display: none;
 }
 
+#text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#p1name {
+    text-align: center;
+}
+
 .char {
     position: absolute;
     /*border: 1px solid #000000;*/
@@ -47,7 +57,7 @@ body {
 }
 #player1M {
     position: absolute;
-    left: 15%;
+    left: 5%;
     bottom: 25%;
     font-size: 50px;
 }
@@ -73,7 +83,7 @@ body {
 
 #player2M {
     position: absolute;
-    right: 15%;
+    right: 5%;
     bottom: 25%;
     font-size: 50px;
 }
@@ -118,15 +128,24 @@ button {
     cursor: pointer;
 }
 
-#intro {
-    position: absolute;
-    left: 0%;
-    top: 0%;
-    background-color: #000;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    opacity: 0%;
+#coinsTotal1 {
+    font-size: 50px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #000000;
+    padding: 5%;
+    margin-top: 10%;
+}
+
+#coinsTotal2 {
+    font-size: 50px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #000000;
+    padding: 5%;
+    margin-top: 10%;
 }
 
 #games{
