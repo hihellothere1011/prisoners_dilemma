@@ -12,6 +12,8 @@ let games = 0
 let roundsLeft = numOfRound(10,20)
 let gamesMax = numOfRound(5, 10)
 
+console.log(gamesMax)
+
 function startTheGame() {
     document.getElementById("mainPart").style.display = "block"
     document.getElementById("coinsTotal1").style.display = "none"
@@ -32,8 +34,18 @@ function gameEnds() {
     gameEndsStyle()
     player1.coinsTotal += player1.money
     player2.coinsTotal += player2.money
+
+    const choices = document.getElementById("history")
+    player2.history.forEach((item, index) => {
+        const choiceItems = document.createElement("li")
+        choiceItems.textContent = `Round ${index +1}: ${item}`
+        choices.appendChild(choiceItems)
+    })
+
     player1.money = 0
     player2.money = 0
+    document.getElementById("p1").textContent = player1.money
+    document.getElementById("p2").textContent = player2.money
     player1.history = []
     player2.history = []
 }
@@ -107,7 +119,7 @@ function buttonPress() {
     console.log(roundsLeft)
     if (roundsLeft <= 0) {
         gameEnds()
-    } else if (roundsLeft <= 0 & games === gamesMax) {
+    } else if (games === gamesMax) {
         document.getElementById("mainPart").style.display = "none"
         document.getElementById("coinsTotal1").style.display = "none"
         document.getElementById("coinsTotal2").style.display = "none"

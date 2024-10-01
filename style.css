@@ -128,6 +128,22 @@ button {
     cursor: pointer;
 }
 
+#bots {
+    border: 6px solid #656565;
+    background-color: #9aff7e;
+    border-radius: 20px;
+    color: #656565;
+    font-size: 50px;
+    width: 40%;
+    z-index: 2;
+}
+
+#bots:hover {
+    background-color: #656565;
+    color: #9aff7e;
+    cursor: pointer;
+}
+
 #coinsTotal1 {
     font-size: 50px;
     display: none;
@@ -165,4 +181,10 @@ button {
     border: 3px solid #000000;
     padding: 5%;
     margin-top: 10%;
+}
+
+#history {
+    font-size: 50px;
+    font-weight: bolder;
+    text-align: center;
 }
