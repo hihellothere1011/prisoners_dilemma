@@ -1,6 +1,10 @@
+
+/*Main part (In script.js) */
 import * as pic from "./picture.js"
 import player from "./player.js"
 import generateDecision from "./personalities.js"
+
+document.getElementById("history").style.display = "none"
 
 betray()
 cooperate()
@@ -14,7 +18,20 @@ let gamesMax = numOfRound(5, 10)
 
 console.log(gamesMax)
 
+function playerCreation(name, money, personality=0) {
+    const plays = new player(name, money, personality)
+    return plays
+}
+
+function numOfRound(min=10, max=15) {
+    if (min>max) [min, max] = [max, min]
+    return Math.floor(Math.random() *(max-min)) + min
+}
+
+/*Start and end (In startEnd.js) */
+
 function startTheGame() {
+
     document.getElementById("mainPart").style.display = "block"
     document.getElementById("coinsTotal1").style.display = "none"
     document.getElementById("coinsTotal2").style.display = "none"
@@ -24,10 +41,12 @@ function startTheGame() {
     } else {
         document.getElementById("games").textContent = `GAME: Final`
     }
+    player1.personality = 0
     player2.personality = Math.floor(Math.random() * 3)
 
     console.log(`P2 personality: ${player2.personality}`)
 }
+
 function gameEnds() {
     console.log("Game ends")
     roundsLeft = numOfRound(10,20)
@@ -50,13 +69,14 @@ function gameEnds() {
     player2.history = []
 }
 
-function playerCreation(name, money, personality=0) {
-    const plays = new player(name, money, personality)
-    return plays
-}
-function numOfRound(min=10, max=15) {
-    if (min>max) [min, max] = [max, min]
-    return Math.floor(Math.random() *(max-min)) + min
+function gameEndsStyle() {
+    document.getElementById("coinsTotal1").textContent = `P1 Coins in total: ${player1.money}`
+    document.getElementById("coinsTotal2").textContent = `P2 Coins in total: ${player2.money}`
+    document.getElementById("history").style.display = "block"
+    document.getElementById("coinsTotal1").style.display = "flex"
+    document.getElementById("coinsTotal2").style.display = "flex"
+    document.getElementById("text").style.display = "flex"
+    document.getElementById("mainPart").style.display = "none"
 }
 
 function nameSetting() {
@@ -68,9 +88,27 @@ function nameSetting() {
         document.getElementById("playername").textContent = player1.name
         document.getElementById("player2name").textContent = player2.name
         document.getElementById("text").style.display = "none"
+        
+        /*Tornament mode */
+        
+        function bots() {
+            pointSystem(generateDecision(player1))
+            buttonPress()
+        }
+
+        bots()
+        
+            
+        
+        
+        
+        /*Tornament mode */
+    
     })
 }
-/*point system */
+
+/*point system (In point.js)*/
+
 function pointSystem(p1Decision, p2Decision = generateDecision(player2)) {
     let p1M = document.getElementById("p1")
     let p2M = document.getElementById("p2")
@@ -105,15 +143,8 @@ function pointSystem(p1Decision, p2Decision = generateDecision(player2)) {
     }
     player2.history.push([p1Decision,p2Decision])
 }
-function gameEndsStyle() {
-    document.getElementById("coinsTotal1").textContent = `P1 Coins in total: ${player1.money}`
-    document.getElementById("coinsTotal2").textContent = `P2 Coins in total: ${player2.money}`
-    document.getElementById("coinsTotal1").style.display = "flex"
-    document.getElementById("coinsTotal2").style.display = "flex"
-    document.getElementById("text").style.display = "flex"
-    document.getElementById("mainPart").style.display = "none"
-}
-/* betray & cooperate handling */
+
+/* betray & cooperate handling (In decision.js)*/
 function buttonPress() {
     roundsLeft -= 1
     console.log(roundsLeft)
@@ -145,5 +176,4 @@ function cooperate() {
         pointSystem("cooperate")
         buttonPress()
     })
-
 }
