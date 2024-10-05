@@ -10,7 +10,7 @@ betray()
 cooperate()
 nameSetting()
 
-let player1 = playerCreation("Austin", 0)
+let player1 = playerCreation("Austin", 2)
 let player2 = playerCreation("Tim", 0)
 let games = 0
 let roundsLeft = numOfRound(10,20)
@@ -31,7 +31,12 @@ function numOfRound(min=10, max=15) {
 /*Start and end (In startEnd.js) */
 
 function startTheGame() {
-
+    let removeHistory = document.getElementById("history")
+    while (removeHistory.firstChild) {
+        removeHistory.removeChild(removeHistory.firstChild)
+    }
+    player1.history = []
+    player2.history = []
     document.getElementById("mainPart").style.display = "block"
     document.getElementById("coinsTotal1").style.display = "none"
     document.getElementById("coinsTotal2").style.display = "none"
@@ -43,7 +48,7 @@ function startTheGame() {
     }
     player1.personality = 0
     player2.personality = Math.floor(Math.random() * 3)
-
+    document.getElementById("history").style.display = "none"
     console.log(`P2 personality: ${player2.personality}`)
 }
 
@@ -80,28 +85,43 @@ function gameEndsStyle() {
 }
 
 function nameSetting() {
-    document.getElementById("play").addEventListener("click", (event) => {
+    document.getElementById("play").addEventListener("click", function hello(event) {
         event.preventDefault()
         startTheGame()
+        console.log(document.getElementById("history"))
         let playerName = document.getElementById("p1name").value
         player1.name = playerName
         document.getElementById("playername").textContent = player1.name
         document.getElementById("player2name").textContent = player2.name
         document.getElementById("text").style.display = "none"
-        
         /*Tornament mode */
         
         function bots() {
             pointSystem(generateDecision(player1))
-            buttonPress()
+            roundsLeft -= 1
+            if (roundsLeft<=0) {
+                gameEnds()
+            }
+            if (games === gamesMax) {
+                document.getElementById("mainPart").style.display = "none"
+                document.getElementById("coinsTotal1").style.display = "none"
+                document.getElementById("coinsTotal2").style.display = "none"
+                document.getElementById("lastScene").style.display = "flex"
+                document.getElementById("history").style.display = "none"
+                document.getElementById("you").textContent = `${player1.name}, the failure , get ${player1.coinsTotal} coins`
+                document.getElementById("cousin").textContent = `Amazing cousin,  ${player2.name}, get ${player2.coinsTotal} coins`
+                if (player1.coinsTotal < player2.coinsTotal) {
+                    document.getElementById("result").textContent = "Look at your cousin Tim, he earn 500 thousand coins more than you.\nYou losed, failure."
+                    stop()
+                }
+                window.stop()
+                document.getElementById("play").removeEventListener("click", hello)
+            }
         }
 
-        bots()
-        
-            
-        
-        
-        
+        for (let x =0; x<roundsLeft; x+=0.05) {
+            bots()
+        }
         /*Tornament mode */
     
     })
