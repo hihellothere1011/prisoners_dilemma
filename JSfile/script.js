@@ -14,6 +14,7 @@ let player1 = playerCreation("Austin", 2)
 let player2 = playerCreation("Tim", 0)
 let games = 0
 let roundsLeft = numOfRound(10,20)
+let roundsLeftCopy = roundsLeft
 let gamesMax = numOfRound(5, 10)
 
 console.log(gamesMax)
@@ -54,16 +55,32 @@ function startTheGame() {
 
 function gameEnds() {
     console.log("Game ends")
+    const round = document.getElementById("rounds")
+    for (let i=0; i<roundsLeftCopy; i++) {
+        const roundsSend = document.createElement("th")
+        roundsSend.textContent = `${i+1}`
+        round.appendChild(roundsSend)
+    }
     roundsLeft = numOfRound(10,20)
+    roundsLeftCopy = roundsLeft
     gameEndsStyle()
     player1.coinsTotal += player1.money
     player2.coinsTotal += player2.money
+
+    
+    
 
     const choices = document.getElementById("history")
     player2.history.forEach((item, index) => {
         const choiceItems = document.createElement("li")
         choiceItems.textContent = `Round ${index +1}: ${item}`
         choices.appendChild(choiceItems)
+        const his = document.createElement("td")
+        his.textContent = `${item[0]}`
+        document.getElementById("p1game").appendChild(his)
+        const his2 = document.createElement("td")
+        his2.textContent = item[1]
+        document.getElementById("p2game").appendChild(his2)
     })
 
     player1.money = 0
@@ -110,6 +127,7 @@ function nameSetting() {
                 document.getElementById("history").style.display = "none"
                 document.getElementById("you").textContent = `${player1.name}, the failure , get ${player1.coinsTotal} coins`
                 document.getElementById("cousin").textContent = `Amazing cousin,  ${player2.name}, get ${player2.coinsTotal} coins`
+                document.getElementById("text").style.display = "none"
                 if (player1.coinsTotal < player2.coinsTotal) {
                     document.getElementById("result").textContent = "Look at your cousin Tim, he earn 500 thousand coins more than you.\nYou losed, failure."
                     stop()
@@ -165,6 +183,7 @@ function pointSystem(p1Decision, p2Decision = generateDecision(player2)) {
 }
 
 /* betray & cooperate handling (In decision.js)*/
+
 function buttonPress() {
     roundsLeft -= 1
     console.log(roundsLeft)

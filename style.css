@@ -184,8 +184,22 @@ button {
 }
 
 #history {
+    background-color: #7ed6ff;
     border: 3px solid #000000;
     font-size: 50px;
     text-align: center;
     margin-top: 10%;
+}
+
+table {
+    border: 3px solid #000000;
+    background-color: #7ed6ff;
+    font-size: 50px;
+    padding: 5%;
+}
+
+th,td {
+    border: 3px solid #000000;
+    margin: 100%;
+    
 }
