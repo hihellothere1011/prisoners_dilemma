@@ -4,7 +4,6 @@ import * as pic from "./picture.js"
 import player from "./player.js"
 import generateDecision from "./personalities.js"
 
-document.getElementById("history").style.display = "none"
 
 betray()
 cooperate()
@@ -16,6 +15,7 @@ let games = 0
 let roundsLeft = numOfRound(10,20)
 let roundsLeftCopy = roundsLeft
 let gamesMax = numOfRound(5, 10)
+let gameHistory = []
 
 console.log(gamesMax)
 
@@ -32,15 +32,13 @@ function numOfRound(min=10, max=15) {
 /*Start and end (In startEnd.js) */
 
 function startTheGame() {
-    let removeHistory = document.getElementById("history")
-    while (removeHistory.firstChild) {
-        removeHistory.removeChild(removeHistory.firstChild)
-    }
-    player1.history = []
+    gameHistory.push([])
+    player1.history = []  
     player2.history = []
     document.getElementById("mainPart").style.display = "block"
     document.getElementById("coinsTotal1").style.display = "none"
     document.getElementById("coinsTotal2").style.display = "none"
+    document.getElementById("resultSheet").style.display = "none"
     games += 1
     if (gamesMax !== games) {
         document.getElementById("games").textContent = `GAME: ${games}`
@@ -49,40 +47,62 @@ function startTheGame() {
     }
     player1.personality = 0
     player2.personality = Math.floor(Math.random() * 3)
-    document.getElementById("history").style.display = "none"
     console.log(`P2 personality: ${player2.personality}`)
 }
 
+function resultSheet() {
+    /*const sheet  = document.createElement("table")
+    const rows = document.createElement("tr")
+    const heads = document.createElement("th")
+    const data = document.createElement("td")
+    rows.id = "rounds"
+    sheet.appendChild(rows)
+    rows.id = "p1game"
+    sheet.appendChild(rows)
+    rows.id = "p2game"
+    sheet.appendChild(rows)*/
+    const round = document.getElementById("rounds")
+    const headPlayer = document.createElement("th")
+    headPlayer.textContent = "Player"
+    round.appendChild(headPlayer)
+    const p1game  = document.getElementById("p1game")
+    const player1Name = document.createElement("td")
+    player1Name.textContent = `${player1.name}`
+    p1game.appendChild(player1Name)
+    const p2game  = document.getElementById("p2game")
+    const player2Name = document.createElement("td")
+    player2Name.textContent = `${player2.name}`
+    p2game.appendChild(player2Name)
+    gameHistory[gameHistory.length - 1].forEach((item, index) => {
+        switch (`${item[0]},${item[1]}`) {
+            case "betray,betray":
+            case "cooperate,cooperate":
+            case "betray,cooperate":
+            case "cooperate,betray":
+        }
+        const his = document.createElement("td")
+        his.textContent = `${item[0]}`
+        p1game.appendChild(his)
+        const his2 = document.createElement("td")
+        his2.textContent = item[1]
+        p2game.appendChild(his2)
+        const roundsSend = document.createElement("th")
+        roundsSend.textContent = `${index+1}`
+        round.appendChild(roundsSend)
+    })
+    console.log(document.getElementById("resultSheet").style.display)
+    
+    
+}
 function gameEnds() {
     console.log("Game ends")
-    const round = document.getElementById("rounds")
-    for (let i=0; i<roundsLeftCopy; i++) {
-        const roundsSend = document.createElement("th")
-        roundsSend.textContent = `${i+1}`
-        round.appendChild(roundsSend)
-    }
+    
     roundsLeft = numOfRound(10,20)
     roundsLeftCopy = roundsLeft
     gameEndsStyle()
     player1.coinsTotal += player1.money
     player2.coinsTotal += player2.money
-
-    
-    
-
-    const choices = document.getElementById("history")
-    player2.history.forEach((item, index) => {
-        const choiceItems = document.createElement("li")
-        choiceItems.textContent = `Round ${index +1}: ${item}`
-        choices.appendChild(choiceItems)
-        const his = document.createElement("td")
-        his.textContent = `${item[0]}`
-        document.getElementById("p1game").appendChild(his)
-        const his2 = document.createElement("td")
-        his2.textContent = item[1]
-        document.getElementById("p2game").appendChild(his2)
-    })
-
+    resultSheet()
     player1.money = 0
     player2.money = 0
     document.getElementById("p1").textContent = player1.money
@@ -92,20 +112,15 @@ function gameEnds() {
 }
 
 function gameEndsStyle() {
-    document.getElementById("coinsTotal1").textContent = `P1 Coins in total: ${player1.money}`
-    document.getElementById("coinsTotal2").textContent = `P2 Coins in total: ${player2.money}`
-    document.getElementById("history").style.display = "block"
-    document.getElementById("coinsTotal1").style.display = "flex"
-    document.getElementById("coinsTotal2").style.display = "flex"
     document.getElementById("text").style.display = "flex"
     document.getElementById("mainPart").style.display = "none"
+    document.getElementById("resultSheet").style.display = "table"
 }
 
 function nameSetting() {
     document.getElementById("play").addEventListener("click", function hello(event) {
         event.preventDefault()
         startTheGame()
-        console.log(document.getElementById("history"))
         let playerName = document.getElementById("p1name").value
         player1.name = playerName
         document.getElementById("playername").textContent = player1.name
@@ -113,7 +128,7 @@ function nameSetting() {
         document.getElementById("text").style.display = "none"
         /*Tornament mode */
         
-        function bots() {
+        /*function bots() {
             pointSystem(generateDecision(player1))
             roundsLeft -= 1
             if (roundsLeft<=0) {
@@ -124,7 +139,6 @@ function nameSetting() {
                 document.getElementById("coinsTotal1").style.display = "none"
                 document.getElementById("coinsTotal2").style.display = "none"
                 document.getElementById("lastScene").style.display = "flex"
-                document.getElementById("history").style.display = "none"
                 document.getElementById("you").textContent = `${player1.name}, the failure , get ${player1.coinsTotal} coins`
                 document.getElementById("cousin").textContent = `Amazing cousin,  ${player2.name}, get ${player2.coinsTotal} coins`
                 document.getElementById("text").style.display = "none"
@@ -180,6 +194,7 @@ function pointSystem(p1Decision, p2Decision = generateDecision(player2)) {
         
     }
     player2.history.push([p1Decision,p2Decision])
+    gameHistory[gameHistory.length - 1].push([p1Decision,p2Decision])
 }
 
 /* betray & cooperate handling (In decision.js)*/
