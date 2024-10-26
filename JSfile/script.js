@@ -9,7 +9,7 @@ betray()
 cooperate()
 nameSetting()
 
-let player1 = playerCreation("Austin", 2)
+let player1 = playerCreation("Austin", 0, 2)
 let player2 = playerCreation("Tim", 0)
 let games = 0
 let roundsLeft = numOfRound(10,20)
@@ -36,8 +36,6 @@ function startTheGame() {
     player1.history = []  
     player2.history = []
     document.getElementById("mainPart").style.display = "block"
-    document.getElementById("coinsTotal1").style.display = "none"
-    document.getElementById("coinsTotal2").style.display = "none"
     document.getElementById("resultSheet").style.display = "none"
     games += 1
     if (gamesMax !== games) {
@@ -51,48 +49,62 @@ function startTheGame() {
 }
 
 function resultSheet() {
-    /*const sheet  = document.createElement("table")
-    const rows = document.createElement("tr")
-    const heads = document.createElement("th")
-    const data = document.createElement("td")
-    rows.id = "rounds"
-    sheet.appendChild(rows)
-    rows.id = "p1game"
-    sheet.appendChild(rows)
-    rows.id = "p2game"
-    sheet.appendChild(rows)*/
     const round = document.getElementById("rounds")
+    const gameDisplay = document.createElement("td")
+    gameDisplay.textContent = "Game"
+    round.appendChild(gameDisplay)
     const headPlayer = document.createElement("th")
     headPlayer.textContent = "Player"
     round.appendChild(headPlayer)
     const p1game  = document.getElementById("p1game")
+    const gameShow1 = document.createElement("td")
+    gameShow1.textContent = `${games}`
+    gameShow1.removeAttribute("style")
+    p1game.appendChild(gameShow1)
     const player1Name = document.createElement("td")
     player1Name.textContent = `${player1.name}`
     p1game.appendChild(player1Name)
     const p2game  = document.getElementById("p2game")
+    const gameShow2 = document.createElement("td")
+    gameShow2.textContent = `${games}`
+    gameShow2.removeAttribute("style")
+    p2game.appendChild(gameShow2)
     const player2Name = document.createElement("td")
     player2Name.textContent = `${player2.name}`
     p2game.appendChild(player2Name)
-    gameHistory[gameHistory.length - 1].forEach((item, index) => {
-        switch (`${item[0]},${item[1]}`) {
-            case "betray,betray":
-            case "cooperate,cooperate":
-            case "betray,cooperate":
-            case "cooperate,betray":
-        }
+    console.log(gameHistory)
+    gameHistory[gameHistory.length - 1].forEach((item,index) => {
         const his = document.createElement("td")
-        his.textContent = `${item[0]}`
-        p1game.appendChild(his)
         const his2 = document.createElement("td")
-        his2.textContent = item[1]
+        switch (`${item[0]}-${item[1]}`) {
+            case "betray-betray":
+                his.textContent = 1
+                his2.textContent = 1
+                break;
+            case "cooperate-cooperate":
+                his.textContent = 3
+                his2.textContent = 3
+                break;
+            case "betray-cooperate":
+                his.textContent = 5
+                his2.textContent = 0
+                break;
+            case "cooperate-betray":
+                his.textContent = 0
+                his2.textContent = 5
+                break;
+            default:
+                console.log(`${item[0]}-${item[1]}`)
+                his.textContent = he
+                his2.textContent = ha
+                break;
+        }
+        p1game.appendChild(his)
         p2game.appendChild(his2)
         const roundsSend = document.createElement("th")
         roundsSend.textContent = `${index+1}`
         round.appendChild(roundsSend)
     })
-    console.log(document.getElementById("resultSheet").style.display)
-    
-    
 }
 function gameEnds() {
     console.log("Game ends")
@@ -136,8 +148,6 @@ function nameSetting() {
             }
             if (games === gamesMax) {
                 document.getElementById("mainPart").style.display = "none"
-                document.getElementById("coinsTotal1").style.display = "none"
-                document.getElementById("coinsTotal2").style.display = "none"
                 document.getElementById("lastScene").style.display = "flex"
                 document.getElementById("you").textContent = `${player1.name}, the failure , get ${player1.coinsTotal} coins`
                 document.getElementById("cousin").textContent = `Amazing cousin,  ${player2.name}, get ${player2.coinsTotal} coins`
@@ -206,11 +216,9 @@ function buttonPress() {
         gameEnds()
     } else if (games === gamesMax) {
         document.getElementById("mainPart").style.display = "none"
-        document.getElementById("coinsTotal1").style.display = "none"
-        document.getElementById("coinsTotal2").style.display = "none"
         document.getElementById("lastScene").style.display = "flex"
         document.getElementById("you").textContent = `${player1.name}, the failure , get ${player1.coinsTotal} coins`
-        document.getElementById("cousin").textContent = `Amazing cousin,  ${player2.name}, get ${player2.coinsTotal} coins`
+        document.getElementById("cousin").textContent = `Amazing cousin,  ${player2.name}, get ${player2.coinsTotal} coins  `
         if (player1.coinsTotal < player2.coinsTotal) {
             document.getElementById("result").textContent = "Look at your cousin Tim, he earn 500 thousand coins more than you.\nYou losed, failure."
             stop()
