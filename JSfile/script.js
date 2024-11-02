@@ -9,13 +9,15 @@ betray()
 cooperate()
 nameSetting()
 
-let player1 = playerCreation("Austin", 0, 2)
+let player1 = playerCreation("Austin", 0)
 let player2 = playerCreation("Tim", 0)
 let games = 0
-let roundsLeft = numOfRound(10,20)
+let roundsLeft = 19
 let roundsLeftCopy = roundsLeft
 let gamesMax = numOfRound(5, 10)
 let gameHistory = []
+
+document.getElementById("resultSheet").style.display = "none"
 
 console.log(gamesMax)
 
@@ -41,6 +43,9 @@ function startTheGame() {
     if (gamesMax !== games) {
         document.getElementById("games").textContent = `GAME: ${games}`
     } else {
+        if (games-1 === gamesMax) {
+            document.getElementById("games").textContent = `GAME: Final`
+        }
         document.getElementById("games").textContent = `GAME: Final`
     }
     player1.personality = 0
@@ -49,49 +54,54 @@ function startTheGame() {
 }
 
 function resultSheet() {
-    const round = document.getElementById("rounds")
-    const gameDisplay = document.createElement("td")
-    gameDisplay.textContent = "Game"
-    round.appendChild(gameDisplay)
-    const headPlayer = document.createElement("th")
-    headPlayer.textContent = "Player"
-    round.appendChild(headPlayer)
-    const p1game  = document.getElementById("p1game")
+    const sheet = document.getElementById("resultSheet")
+
+    const p1game  = document.createElement("tr")
     const gameShow1 = document.createElement("td")
     gameShow1.textContent = `${games}`
-    gameShow1.removeAttribute("style")
     p1game.appendChild(gameShow1)
     const player1Name = document.createElement("td")
     player1Name.textContent = `${player1.name}`
     p1game.appendChild(player1Name)
-    const p2game  = document.getElementById("p2game")
+
+    const p2game  = document.createElement("tr")
     const gameShow2 = document.createElement("td")
     gameShow2.textContent = `${games}`
-    gameShow2.removeAttribute("style")
     p2game.appendChild(gameShow2)
     const player2Name = document.createElement("td")
     player2Name.textContent = `${player2.name}`
     p2game.appendChild(player2Name)
+
     console.log(gameHistory)
-    gameHistory[gameHistory.length - 1].forEach((item,index) => {
+    gameHistory[gameHistory.length - 1].forEach((item) => {
         const his = document.createElement("td")
         const his2 = document.createElement("td")
         switch (`${item[0]}-${item[1]}`) {
             case "betray-betray":
                 his.textContent = 1
+                his.style.backgroundColor = "#ff5d5d"
                 his2.textContent = 1
+                his2.style.backgroundColor = "#ff5d5d"
                 break;
+
             case "cooperate-cooperate":
                 his.textContent = 3
+                his.style.backgroundColor = "#88ff5d"
                 his2.textContent = 3
+                his2.style.backgroundColor = "#88ff5d"
                 break;
+
             case "betray-cooperate":
                 his.textContent = 5
+                his.style.backgroundColor = "#ff5d5d"
                 his2.textContent = 0
+                his2.style.backgroundColor = "#88ff5d"
                 break;
             case "cooperate-betray":
                 his.textContent = 0
+                his.style.backgroundColor = "#88ff5d"
                 his2.textContent = 5
+                his2.style.backgroundColor = "#ff5d5d"
                 break;
             default:
                 console.log(`${item[0]}-${item[1]}`)
@@ -101,20 +111,26 @@ function resultSheet() {
         }
         p1game.appendChild(his)
         p2game.appendChild(his2)
-        const roundsSend = document.createElement("th")
-        roundsSend.textContent = `${index+1}`
-        round.appendChild(roundsSend)
     })
+    if (p1game.length >19) {
+        p1game.deleteCell(-1)
+    }
+    if (p2game.length >19) {
+        p2game.deleteCell(-1)
+    }
+    sheet.appendChild(p1game)
+    sheet.appendChild(p2game)
 }
 function gameEnds() {
     console.log("Game ends")
     
-    roundsLeft = numOfRound(10,20)
+    roundsLeft = 19
     roundsLeftCopy = roundsLeft
     gameEndsStyle()
     player1.coinsTotal += player1.money
     player2.coinsTotal += player2.money
     resultSheet()
+    console.log(document.getElementById("resultSheet"))
     player1.money = 0
     player2.money = 0
     document.getElementById("p1").textContent = player1.money
@@ -140,7 +156,7 @@ function nameSetting() {
         document.getElementById("text").style.display = "none"
         /*Tornament mode */
         
-        /*function bots() {
+        function bots() {
             pointSystem(generateDecision(player1))
             roundsLeft -= 1
             if (roundsLeft<=0) {

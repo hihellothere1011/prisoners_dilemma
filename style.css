@@ -193,4 +193,5 @@ table {
 }
 th, td {
     border: 3px solid #000000;
+    background-color: #fffc46;
 }
