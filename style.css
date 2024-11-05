@@ -164,16 +164,7 @@ button {
     z-index: 2;
 }
 
-#lastScene {
-    font-size: 50px;
-    display: none;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    border: 3px solid #000000;
-    padding: 5%;
-    margin-top: 10%;
-}
+
 
 #history {
     background-color: #7ed6ff;

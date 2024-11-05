@@ -43,18 +43,19 @@ function startTheGame() {
     if (gamesMax !== games) {
         document.getElementById("games").textContent = `GAME: ${games}`
     } else {
-        if (games-1 === gamesMax) {
+        if (games === gamesMax) {
             document.getElementById("games").textContent = `GAME: Final`
         }
-        document.getElementById("games").textContent = `GAME: Final`
     }
     player1.personality = 0
     player2.personality = Math.floor(Math.random() * 3)
     console.log(`P2 personality: ${player2.personality}`)
 }
 
-function resultSheet() {
+function resultSheet(gameHistory) {
     const sheet = document.getElementById("resultSheet")
+
+    
 
     const p1game  = document.createElement("tr")
     const gameShow1 = document.createElement("td")
@@ -112,12 +113,6 @@ function resultSheet() {
         p1game.appendChild(his)
         p2game.appendChild(his2)
     })
-    if (p1game.length >19) {
-        p1game.deleteCell(-1)
-    }
-    if (p2game.length >19) {
-        p2game.deleteCell(-1)
-    }
     sheet.appendChild(p1game)
     sheet.appendChild(p2game)
 }
@@ -129,7 +124,7 @@ function gameEnds() {
     gameEndsStyle()
     player1.coinsTotal += player1.money
     player2.coinsTotal += player2.money
-    resultSheet()
+    resultSheet(gameHistory)
     console.log(document.getElementById("resultSheet"))
     player1.money = 0
     player2.money = 0
@@ -137,6 +132,7 @@ function gameEnds() {
     document.getElementById("p2").textContent = player2.money
     player1.history = []
     player2.history = []
+    
 }
 
 function gameEndsStyle() {
@@ -158,26 +154,10 @@ function nameSetting() {
         
         function bots() {
             pointSystem(generateDecision(player1))
-            roundsLeft -= 1
-            if (roundsLeft<=0) {
-                gameEnds()
-            }
-            if (games === gamesMax) {
-                document.getElementById("mainPart").style.display = "none"
-                document.getElementById("lastScene").style.display = "flex"
-                document.getElementById("you").textContent = `${player1.name}, the failure , get ${player1.coinsTotal} coins`
-                document.getElementById("cousin").textContent = `Amazing cousin,  ${player2.name}, get ${player2.coinsTotal} coins`
-                document.getElementById("text").style.display = "none"
-                if (player1.coinsTotal < player2.coinsTotal) {
-                    document.getElementById("result").textContent = "Look at your cousin Tim, he earn 500 thousand coins more than you.\nYou losed, failure."
-                    stop()
-                }
-                window.stop()
-                document.getElementById("play").removeEventListener("click", hello)
-            }
+            buttonPress()
         }
 
-        for (let x =0; x<roundsLeft; x+=0.05) {
+        for (let x =0; x<roundsLeftCopy; x++) {
             bots()
         }
         /*Tornament mode */
@@ -231,10 +211,8 @@ function buttonPress() {
     if (roundsLeft <= 0) {
         gameEnds()
     } else if (games === gamesMax) {
+        document.getElementById("text").style.display = "none"
         document.getElementById("mainPart").style.display = "none"
-        document.getElementById("lastScene").style.display = "flex"
-        document.getElementById("you").textContent = `${player1.name}, the failure , get ${player1.coinsTotal} coins`
-        document.getElementById("cousin").textContent = `Amazing cousin,  ${player2.name}, get ${player2.coinsTotal} coins  `
         if (player1.coinsTotal < player2.coinsTotal) {
             document.getElementById("result").textContent = "Look at your cousin Tim, he earn 500 thousand coins more than you.\nYou losed, failure."
             stop()

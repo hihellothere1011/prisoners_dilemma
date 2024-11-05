@@ -1,5 +1,7 @@
-function resultSheet() {
+function resultSheet(gameHistory) {
     const sheet = document.getElementById("resultSheet")
+
+    
 
     const p1game  = document.createElement("tr")
     const gameShow1 = document.createElement("td")
@@ -58,10 +60,10 @@ function resultSheet() {
         p2game.appendChild(his2)
     })
     if (p1game.length >19) {
-        p1game.lastElementChild.remove()
+        p1game.deleteCell(-1)
     }
     if (p2game.length >19) {
-        p2game.lastElementChild.remove()
+        p2game.deleteCell(-1)
     }
     sheet.appendChild(p1game)
     sheet.appendChild(p2game)
