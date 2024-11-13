@@ -6,7 +6,7 @@ export default function generateDecision(player) {
     switch (player.personality) {
         case 0 /*Randomly */:   
             return Math.random() < 0.5 ? "betray" : "cooperate";
-        case 1 /*Tit for tat */:
+        case 1 /*Tit for tat (Tom) */:
             if (!player.history.length) {
                 return "cooperate"
             } else {
@@ -22,5 +22,6 @@ export default function generateDecision(player) {
             } else {
                 return "betray"
             }
+        case 3:
     }
 }

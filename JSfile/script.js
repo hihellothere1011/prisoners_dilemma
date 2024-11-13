@@ -3,19 +3,33 @@
 import * as pic from "./picture.js"
 import player from "./player.js"
 import generateDecision from "./personalities.js"
-
+import resultSheet from "./sheet.js"
 
 betray()
 cooperate()
 nameSetting()
 
+let playerDict = {
+    1:playerCreation("Tim",0),
+    2:playerCreation("Tom",0),
+    3:playerCreation("Trump",0),
+    4:playerCreation("Rick",0),
+    5:playerCreation("Daniel",0),
+    6:playerCreation("Dwayne",0),
+    7:playerCreation("Peter",0)
+}
+console.log(playerDict.length)
 let player1 = playerCreation("Austin", 0)
-let player2 = playerCreation("Tim", 0)
+let player2 = playerDict[Math.floor(Math.random()*7)]
 let games = 0
 let roundsLeft = 19
 let roundsLeftCopy = roundsLeft
-let gamesMax = numOfRound(5, 10)
+let gamesMax = ((playerDict.length+1)*(playerDict.length+2))*0.5
 let gameHistory = []
+    
+let already = []
+
+
 
 document.getElementById("resultSheet").style.display = "none"
 
@@ -26,112 +40,104 @@ function playerCreation(name, money, personality=0) {
     return plays
 }
 
-function numOfRound(min=10, max=15) {
-    if (min>max) [min, max] = [max, min]
-    return Math.floor(Math.random() *(max-min)) + min
+function checkIfEnds() {
+    if (games === gamesMax) {
+        document.getElementById("text").style.display = "none"
+    }
+}
+
+function whoWins(player1, player2) {
+    if (player1.money>=player2.money) {
+        return player1
+    } else {
+        return player2
+    }
+}
+
+function nextPlayer(playerI,arr=already) {
+    if (arr.includes(playerI)) {
+        return true
+    } else {
+        return false
+    }
+}
+
+function untilDone(x,y) {
+    let finish = false
+    while (!finish) {
+        x = playerDict[Math.floor(Math.random() *7)]
+        y = playerDict[Math.floor(Math.random() *7)]
+        if (!nextPlayer(x) || !nextPlayer(y) || x !== y || x.points === y.points) {
+            finish = true
+        } 
+    }
 }
 
 /*Start and end (In startEnd.js) */
 
 function startTheGame() {
     gameHistory.push([])
+
+    checkIfEnds()
     player1.history = []  
     player2.history = []
+    already.push(player1)
+    already.push(player2)
     document.getElementById("mainPart").style.display = "block"
     document.getElementById("resultSheet").style.display = "none"
     games += 1
+    
     if (gamesMax !== games) {
         document.getElementById("games").textContent = `GAME: ${games}`
+    } else if (games === 1) {
+        let playerName = document.getElementById("p1name").value
+        player1.name = playerName
     } else {
         if (games === gamesMax) {
             document.getElementById("games").textContent = `GAME: Final`
+            document.getElementById("text").style.display = "none"
         }
     }
-    player1.personality = 0
-    player2.personality = Math.floor(Math.random() * 3)
     console.log(`P2 personality: ${player2.personality}`)
-}
-
-function resultSheet(gameHistory) {
-    const sheet = document.getElementById("resultSheet")
-
     
-
-    const p1game  = document.createElement("tr")
-    const gameShow1 = document.createElement("td")
-    gameShow1.textContent = `${games}`
-    p1game.appendChild(gameShow1)
-    const player1Name = document.createElement("td")
-    player1Name.textContent = `${player1.name}`
-    p1game.appendChild(player1Name)
-
-    const p2game  = document.createElement("tr")
-    const gameShow2 = document.createElement("td")
-    gameShow2.textContent = `${games}`
-    p2game.appendChild(gameShow2)
-    const player2Name = document.createElement("td")
-    player2Name.textContent = `${player2.name}`
-    p2game.appendChild(player2Name)
-
-    console.log(gameHistory)
-    gameHistory[gameHistory.length - 1].forEach((item) => {
-        const his = document.createElement("td")
-        const his2 = document.createElement("td")
-        switch (`${item[0]}-${item[1]}`) {
-            case "betray-betray":
-                his.textContent = 1
-                his.style.backgroundColor = "#ff5d5d"
-                his2.textContent = 1
-                his2.style.backgroundColor = "#ff5d5d"
-                break;
-
-            case "cooperate-cooperate":
-                his.textContent = 3
-                his.style.backgroundColor = "#88ff5d"
-                his2.textContent = 3
-                his2.style.backgroundColor = "#88ff5d"
-                break;
-
-            case "betray-cooperate":
-                his.textContent = 5
-                his.style.backgroundColor = "#ff5d5d"
-                his2.textContent = 0
-                his2.style.backgroundColor = "#88ff5d"
-                break;
-            case "cooperate-betray":
-                his.textContent = 0
-                his.style.backgroundColor = "#88ff5d"
-                his2.textContent = 5
-                his2.style.backgroundColor = "#ff5d5d"
-                break;
-            default:
-                console.log(`${item[0]}-${item[1]}`)
-                his.textContent = he
-                his2.textContent = ha
-                break;
-        }
-        p1game.appendChild(his)
-        p2game.appendChild(his2)
-    })
-    sheet.appendChild(p1game)
-    sheet.appendChild(p2game)
 }
+
 function gameEnds() {
     console.log("Game ends")
+    console.log(games)
+
+    let result = whoWins(player1,player2)
+    result.points += 1
+    console.log(player1.points,player2.points)
     
     roundsLeft = 19
     roundsLeftCopy = roundsLeft
     gameEndsStyle()
+    
     player1.coinsTotal += player1.money
     player2.coinsTotal += player2.money
-    resultSheet(gameHistory)
+    
+    resultSheet(gameHistory,player1,player2,games)
     console.log(document.getElementById("resultSheet"))
+    
+    if (games === gamesMax) {
+        document.getElementById("resultSheet").style.display = "none"
+    }
+    
     player1.money = 0
     player2.money = 0
     document.getElementById("p1").textContent = player1.money
     document.getElementById("p2").textContent = player2.money
+    
     player1.history = []
     player2.history = []
+
+    let x = playerDict[Math.floor(Math.random() *7)]
+    let y = playerDict[Math.floor(Math.random() *7)]
+    untilDone(x,y)
+    player1 = x
+    player2 = y
+    console.log(x,y)
     
 }
 
@@ -145,22 +151,21 @@ function nameSetting() {
     document.getElementById("play").addEventListener("click", function hello(event) {
         event.preventDefault()
         startTheGame()
-        let playerName = document.getElementById("p1name").value
-        player1.name = playerName
+        
+        
         document.getElementById("playername").textContent = player1.name
         document.getElementById("player2name").textContent = player2.name
         document.getElementById("text").style.display = "none"
-        /*Tornament mode */
+        
         
         function bots() {
             pointSystem(generateDecision(player1))
             buttonPress()
         }
-
+    
         for (let x =0; x<roundsLeftCopy; x++) {
             bots()
         }
-        /*Tornament mode */
     
     })
 }
@@ -213,10 +218,7 @@ function buttonPress() {
     } else if (games === gamesMax) {
         document.getElementById("text").style.display = "none"
         document.getElementById("mainPart").style.display = "none"
-        if (player1.coinsTotal < player2.coinsTotal) {
-            document.getElementById("result").textContent = "Look at your cousin Tim, he earn 500 thousand coins more than you.\nYou losed, failure."
-            stop()
-        }
+        document.getElementById("resultSheet").style.display = "none"
     }
 }
 function betray() {

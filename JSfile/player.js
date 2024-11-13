@@ -2,11 +2,12 @@
 
 
 export default class player {
-    constructor(name, money, personality, history=[], coinsTotal=0) {
+    constructor(name, money, personality, history=[], coinsTotal=0, points=0) {
         this.name = name
         this.money = money
         this.history = history
         this.personality = personality
         this.coinsTotal = coinsTotal
+        this.points = points
     }
 }

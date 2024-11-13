@@ -1,4 +1,4 @@
-function resultSheet(gameHistory) {
+export default function resultSheet(gameHistory,player1,player2,games) {
     const sheet = document.getElementById("resultSheet")
 
     
@@ -10,6 +10,18 @@ function resultSheet(gameHistory) {
     const player1Name = document.createElement("td")
     player1Name.textContent = `${player1.name}`
     p1game.appendChild(player1Name)
+    const pointOfPlayer1 = document.createElement("td")
+    pointOfPlayer1.textContent = player1.points
+    p1game.appendChild(pointOfPlayer1)  
+    if (player1.money>=player2.money) {
+        const win1 = document.createElement("td")
+        win1.textContent = "Win"
+        p1game.appendChild(win1)
+    } else {
+        const lose1 = document.createElement("td")
+        lose1.textContent = "Lose"
+        p1game.appendChild(lose1)
+    }
 
     const p2game  = document.createElement("tr")
     const gameShow2 = document.createElement("td")
@@ -18,6 +30,18 @@ function resultSheet(gameHistory) {
     const player2Name = document.createElement("td")
     player2Name.textContent = `${player2.name}`
     p2game.appendChild(player2Name)
+    const pointOfPlayer2 = document.createElement("td")
+    pointOfPlayer2.textContent = player2.points
+    p2game.appendChild(pointOfPlayer2)  
+    if (player2.money>player1.money) {
+        const win2 = document.createElement("td")
+        win2.textContent = "Win"
+        p2game.appendChild(win2)
+    } else {
+        const lose2 = document.createElement("td")
+        lose2.textContent = "Lose"
+        p2game.appendChild(lose2)
+    }
 
     console.log(gameHistory)
     gameHistory[gameHistory.length - 1].forEach((item) => {
@@ -59,12 +83,6 @@ function resultSheet(gameHistory) {
         p1game.appendChild(his)
         p2game.appendChild(his2)
     })
-    if (p1game.length >19) {
-        p1game.deleteCell(-1)
-    }
-    if (p2game.length >19) {
-        p2game.deleteCell(-1)
-    }
     sheet.appendChild(p1game)
     sheet.appendChild(p2game)
 }
