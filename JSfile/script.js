@@ -9,15 +9,16 @@ betray()
 cooperate()
 nameSetting()
 
-let playerDict = {
-    1:playerCreation("Tim",0),
-    2:playerCreation("Tom",0),
-    3:playerCreation("Trump",0),
-    4:playerCreation("Rick",0),
-    5:playerCreation("Daniel",0),
-    6:playerCreation("Dwayne",0),
-    7:playerCreation("Peter",0)
-}
+let playerDict =[
+    playerCreation("Tim",0),
+    playerCreation("Tom",0),
+    playerCreation("Trump",0),
+    playerCreation("Rick",0),
+    playerCreation("Daniel",0),
+    playerCreation("Dwayne",0),
+    playerCreation("Peter",0)
+]
+
 console.log(playerDict.length)
 let player1 = playerCreation("Austin", 0)
 let player2 = playerDict[Math.floor(Math.random()*7)]
@@ -62,17 +63,28 @@ function nextPlayer(playerI,arr=already) {
     }
 }
 
-function untilDone(x,y) {
-    let finish = false
-    while (!finish) {
-        x = playerDict[Math.floor(Math.random() *7)]
-        y = playerDict[Math.floor(Math.random() *7)]
-        if (!nextPlayer(x) || !nextPlayer(y) || x !== y || x.points === y.points) {
-            finish = true
-        } 
-    }
-}
+function untilDone(x,y, ) {
+    let finish = false;
+    const dictLength = playerDict.length
+    let availablePlayers = playerDict.filter(p => !nextPlayer(p))
 
+    while (!finish) {
+        x = playerDict[Math.floor(Math.random() * dictLength)]
+        y = playerDict[Math.floor(Math.random() * dictLength)]
+        
+    
+        if (availablePlayers.length <= 2) {
+            return 
+        }
+        if (!nextPlayer(x) && 
+            !nextPlayer(y) && 
+            x !== y && 
+            x.points === y.points) {
+            finish = true
+        }
+    }
+    return [x, y]
+}
 /*Start and end (In startEnd.js) */
 
 function startTheGame() {
@@ -98,7 +110,6 @@ function startTheGame() {
             document.getElementById("text").style.display = "none"
         }
     }
-    console.log(`P2 personality: ${player2.personality}`)
     
 }
 
@@ -132,12 +143,11 @@ function gameEnds() {
     player1.history = []
     player2.history = []
 
-    let x = playerDict[Math.floor(Math.random() *7)]
-    let y = playerDict[Math.floor(Math.random() *7)]
-    untilDone(x,y)
-    player1 = x
-    player2 = y
-    console.log(x,y)
+    let x = playerDict[Math.floor(Math.random() *8)]
+    let y = playerDict[Math.floor(Math.random() *8)]
+    let [newX, newY] = untilDone(x, y)
+    player1 = newX
+    player2 = newY
     
 }
 
